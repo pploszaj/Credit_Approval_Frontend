@@ -7,10 +7,10 @@ function Home() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center h-screen gap-2">
         <h3 className="text-5xl">Welcome to</h3>
         <h1 className="text-8xl">Credit+</h1>
-        <button className="text-xl mt-3 text-blue-700" onClick={() => navigate('/form')}>Get Started</button>
+        <button className="text-xl text-blue-700" onClick={() => navigate('/form')}>Get Started</button>
       </div>
     </>
   );

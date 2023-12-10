@@ -25,9 +25,11 @@ function Form() {
   const [income, setIncome] = useState<number>();
   const [relationship, setrelationship] = useState<Relationship>("");
   const [debt, setdebt] = useState<number>();
+  const [loading, setloading] = useState<boolean>(false);
 
   const sumbitHandler = async (e: any) => {
     e.preventDefault();
+    setloading(true);
 
     try {
       const response = await axios.post("/clientdata", {
@@ -51,14 +53,13 @@ function Form() {
       });
     } catch (e) {
       console.log("Error making POST request");
+    } finally {
+      setloading(false);
     }
   };
 
   return (
-    <div className="flex flex-col justify-center items-start h-screen gap-8 ml-20">
-      <h1 className="text-l">
-        Please fill out this form to see if you would get approved today!
-      </h1>
+    <div className="flex items-center h-screen gap-8 ml-20">
       <form
         onSubmit={sumbitHandler}
         className="flex flex-col w-screen justify-center items-start gap-2"
@@ -186,10 +187,7 @@ function Form() {
           >
             <option value=""></option>
             <option value="1">Yes, I have at least one bank account.</option>
-            <option value="0">
-              No, I do not have a bank account. I stash all my money under the
-              mattress.
-            </option>
+            <option value="0">No, I do not have a bank account.</option>
           </select>
         </div>
         <div className="flex">
@@ -307,6 +305,10 @@ function Form() {
           Submit Form
         </button>
       </form>
+
+      <img src="/assets/card.jpg" alt="Card" className="h-screen w-screen object-cover shadow-xl"></img>
+
+      {loading && <p className="text-4xl">Loading...</p>}
     </div>
   );
 }

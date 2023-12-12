@@ -26,11 +26,45 @@ function Form() {
   const [relationship, setrelationship] = useState<Relationship>("");
   const [debt, setdebt] = useState<number>();
   const [loading, setloading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const sumbitHandler = async (e: any) => {
     e.preventDefault();
-    setloading(true);
 
+    if (
+      firstName === "" ||
+      firstName === undefined ||
+      lastName === "" ||
+      lastName === undefined ||
+      gender === "" ||
+      gender === undefined ||
+      age === undefined ||
+      employment === "" ||
+      employment === undefined ||
+      yearsemployment === undefined ||
+      ethnicity === undefined ||
+      drivers === "" ||
+      drivers === undefined ||
+      citizenship === "" ||
+      citizenship === undefined ||
+      zipcode === undefined ||
+      defaults === "" ||
+      defaults === undefined ||
+      creditScore === undefined ||
+      industry === "" ||
+      industry === undefined ||
+      bankstatus === "" ||
+      bankstatus === undefined ||
+      income === undefined ||
+      relationship === "" ||
+      relationship === undefined ||
+      debt === undefined
+    ) {
+      setError(true);
+    } else {
+      setError(false);
+      setloading(true);
+    }
     try {
       const response = await axios.post("/clientdata", {
         firstName,
@@ -307,6 +341,13 @@ function Form() {
                 onChange={(e) => setIncome(Number(e.target.value))}
               ></input>
             </div>
+            {error ? (
+              <p className="text-red-500">
+                Please fill out all fields of the form.
+              </p>
+            ) : (
+              <></>
+            )}
             <button type="submit" className="text-blue-700">
               Submit Form
             </button>
